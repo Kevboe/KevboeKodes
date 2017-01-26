@@ -22,6 +22,7 @@
  *  @version 1.0.0  2017-01-02  B.J. Johnson     Initial writing and release
  *  @version 1.0.1  2017-01-19  Kevin Patterson  First addition of code
  *  @version 1.0.1  2017-01-22  Kevin Patterson  Second Pass through for completing code
+ *  @version 1.0.2  2017-01-26  Kevin Patterson  Creating and refining code for daysBetween() method
  */
 public class CalendarStuff {
 
