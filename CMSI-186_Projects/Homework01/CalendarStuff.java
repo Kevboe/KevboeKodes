@@ -22,7 +22,7 @@
  *  @version 1.0.0  2017-01-02  B.J. Johnson     Initial writing and release
  *  @version 1.0.1  2017-01-19  Kevin Patterson  First addition of code
  *  @version 1.0.1  2017-01-22  Kevin Patterson  Second Pass through for completing code
- *  @version 1.0.2  2017-01-26  Kevin Patterson  Creating and refining code for daysBetween() method
+ *  @version 1.2.0  2017-01-26  Kevin Patterson  Completing the CalendarStuff class
  */
 public class CalendarStuff {
 
@@ -209,42 +209,32 @@ public class CalendarStuff {
      if(compareDate(m1, d1, y1, m2, d2, y2) == 0){
        return dayCount;
      }
-     while(compareDate(m1, d1, y1, m2, d2, y2) == 1){
-       while(d1 != d2){
+     
+     while(compareDate(m1, d1, y1, m2, d2, y2) == -1){
          d1++;
          dayCount++;
-         if(m1 == 2 && isLeapYear(y1) == true && d1 == 28){
-          dayCount++;
-         }
-         if(days[(int)m1] == d1){
+         if(d1 > daysInMonth(m1, y1)){
            m1++;
            d1 = 1;
-         }
-       }
-       while(m1 != m2){
-         dayCount += days[(int)m1];
-         m1++;
-         if(m1 == 2 && isLeapYear(y1) == true){
-           dayCount++;
          }
          if(m1 > 12){
            y1++;
            m1 = 1;
          }
-       }
-       while(y1 != y2){
-         dayCount += 365;
-         y1++;
-         if(isLeapYear(y1) == true){
-           dayCount++;
+     }
+     while(compareDate(m1, d1, y1, m2, d2, y2) == 1){
+         d2++;
+         dayCount++;
+         if(d2 > daysInMonth(m2, y2)){
+           m1++;
+           d2 = 1;
          }
-       }
-       return dayCount;
+         if(m2 > 12){
+           y2++;
+           m2 = 1;
+         }
      }
+     return dayCount;
+   }
 
-     while(compareDate(m1, d1, y1, m2, d2, y2) == -1){
-       return dayCount;
-     }
-   return dayCount;
  }
-}
