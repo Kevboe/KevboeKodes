@@ -1,7 +1,7 @@
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *  File name     :  StringStuff.java
  *  Purpose       :  A file full of stuff to do with the Java String class
- *  Author        :  B.J. Johnson
+ *  Author        :  Kevin Patterson
  *  Date          :  2017-01-19
  *  Description   :  This file presents a bunch of String-style helper methods.  Although pretty much
  *                   any and every thing you'd want to do with Strings is already made for you in the
@@ -14,14 +14,17 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *  Revision History
  *  ----------------
- *            Rev      Date     Modified by:  Reason for change/modification
- *           -----  ----------  ------------  -----------------------------------------------------------
- *  @version 1.0.0  2017-01-19  B.J. Johnson  Initial writing and release
- *  @version 1.1.0  2017-01-22  B.J. Johnson  Fill in methods to make the program actually work
+ *            Rev      Date     Modified by:     Reason for change/modification
+ *           -----  ----------  ------------     -----------------------------------------------------------
+ *  @version 1.0.0  2017-01-19  B.J. Johnson     Initial writing and release
+ *  @version 1.1.0  2017-01-22  B.J. Johnson     Fill in methods to make the program actually work
+ *  @version 1.2.0  2017-01-31  Kevin Patterson  Begin adding code to the methods
+ *  @version 1.2.1  2017-02-05  Kevin Patterson  Finish first instantiation of test code; needs testing
+ *  @version 1.3.0  2017-02-07  Kevin Patterson  Finished code for all Methods, refined with testing
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import java.util.Set;
 import java.util.LinkedHashSet;
-import java.util.*;
+import java.io.*;
 
 public class StringStuff {
 
@@ -34,9 +37,10 @@ public class StringStuff {
    * @return  boolean which is true if there is a vowel, or false otherwise
    */
    public static boolean containsVowel( String s ) {
-      s.toUpperCase();
-      for(int i = 0; i < s.length(); i++;){
-        char x = s.charAt(i);
+      String test = s.toUpperCase();
+      char x = 'a';
+      for(int i = 0; i < s.length(); i++){
+        x = test.charAt(i);
         if(x == 65 || x == 69 || x == 73 || x == 79 || x == 85){
           return true;
         }
@@ -53,7 +57,14 @@ public class StringStuff {
    * @return  boolean which is true if this a palindrome, or false otherwise
    */
    public static boolean isPalindrome( String s ) {
-      return true;
+     boolean pal = true;
+     String str = s.toUpperCase();
+     for(int x = 0; x < str.length()/2; x++){
+       if(str.charAt(x) != str.charAt(str.length() - 1 - x)){
+         pal = false;
+       }
+     }
+      return pal;
    }
 
   /**
@@ -65,9 +76,13 @@ public class StringStuff {
    * @return  String containing the &quot;even&quot; letters from the input
    */
    public static String evensOnly( String s ) {
-     s.toUpperCase();
-     //Upper case starts at 65, odd, so it works out
-      return new String( "HJHJHJ" );
+     String rtrn = "";
+     for(int x = 0; x < s.length(); x++){
+       if((int)s.charAt(x)%2 == 0){
+         rtrn = rtrn + Character.toString(s.charAt(x));
+       }
+     }
+    return rtrn;
    }
 
   /**
@@ -79,9 +94,13 @@ public class StringStuff {
    * @return  String containing the &quot;odd&quot; letters from the input
    */
    public static String oddsOnly( String s ) {
-     s.toUpperCase();
-     //Upper case starts at 65, odd, so it works out
-      return new String( "IKIKIK" );
+     String rtrn = "";
+     for(int x = 0; x < s.length(); x++){
+       if((int)s.charAt(x)%2 == 1){
+         rtrn = rtrn + Character.toString(s.charAt(x));
+       }
+     }
+     return rtrn;
    }
 
   /**
@@ -92,10 +111,15 @@ public class StringStuff {
    * @return  String containing the &quot;even&quot; letters from the input without duplicates
    */
    public static String evensOnlyNoDupes( String s ) {
-      return new String( "HJ" );
-      //call evens only, and then have a check to make sure there are no dupes
+      String s1 = evensOnly(s);
+      String s2 = "";
+      for(int x = 0; x < s1.length(); x++){
+        if(!s2.toUpperCase().contains(Character.toString(s1.charAt(x)).toUpperCase())){
+          s2 += Character.toString(s1.charAt(x));
+        }
+      }
+      return s2;
    }
-
   /**
    * Method to return the characters in a string that correspond to the &quot;ODD&quot; index
    * numbers of the alphabet, but with no duplicate characters in the resulting string.
@@ -104,7 +128,14 @@ public class StringStuff {
    * @return  String containing the &quot;odd&quot; letters from the input without duplicates
    */
    public static String oddsOnlyNoDupes( String s ) {
-      return new String( "IK" );
+     String s1 = oddsOnly(s);
+     String s2 = "";
+     for(int x = 0; x < s1.length(); x++){
+       if(!s2.toUpperCase().contains(Character.toString(s1.charAt(x)).toUpperCase())){
+         s2 += Character.toString(s1.charAt(x));
+       }
+     }
+     return s2;
    }
 
   /**
@@ -114,7 +145,11 @@ public class StringStuff {
    * @return  String containing the reverse of the input string
    */
    public static String reverse( String s ) {
-      return new String( "kculc eht tahw" );
+     String rev = "";
+     for(int x = s.length() - 1; x >= 0; x--){
+       rev += Character.toString(s.charAt(x));
+     }
+      return rev;
    }
 
   /**
