@@ -51,12 +51,11 @@ public class Die {
    * Note: parameter must be checked for validity; invalid value must throw "IllegalArgumentException"
    */
    public Die( int nSides ) {
-     System.out.println("Hello from the die class!");
      if(nSides < MINIMUM_SIDES){
        throw new IllegalArgumentException("The die must have atleast 4 sides.");
      }
-     sides = nSides;
-     dieRoll = 1;
+     this.sides = nSides;
+     this.dieRoll = 1;
    }
 
   /**
@@ -105,7 +104,7 @@ public class Die {
    * @return String representation of this Die
    */
    public static String toString( Die d ) {
-      return "[" + d.getValue() + "]";
+      return "" + d.getValue();
    }
 
   /**
@@ -117,9 +116,20 @@ public class Die {
       System.out.println( d.roll() );
       System.out.println( d.getValue() );
       System.out.println( d.toString() );
-      d.setValue(20);
+      d.setValue(6);
       d.roll();
       System.out.println( Die.toString(d) );
+      System.out.println( d.roll());
+      System.out.println( d.roll());
+      System.out.println( d.roll());
+      System.out.println( d.roll());
+      System.out.println( d.roll());
+      try{
+        d.setValue(3);
+      }
+      catch( IllegalArgumentException IAE){
+        System.out.println("A die must have aleast 4 sides.");
+      }
    }
 
 }
