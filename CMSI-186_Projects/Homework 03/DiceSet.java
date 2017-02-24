@@ -26,9 +26,10 @@
  *            Rev      Date     Modified by:  Reason for change/modification
  *           -----  ----------  ------------  -----------------------------------------------------------
  *  @version 1.0.0  2017-02-09  B.J. Johnson  Initial writing and release
- *  @version 1.1.0  2017-02-23  K. Patterson  Adding code to methods
+ *  @version 1.1.0  2017-02-23  K. Patterson  Added code for all methods and test cases
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import java.util.Arrays;
+import java.util.*;
 
 public class DiceSet {
 
@@ -48,8 +49,10 @@ public class DiceSet {
    * @throws IllegalArgumentException if one or both arguments don't make sense
    * @note   parameters are checked for validity; invalid values throw "IllegalArgumentException"
    */
-   public DiceSet( int count, int sides ) {
-      ds = new Die[ count ];
+   public DiceSet( int numDie, int faces ) {
+      this.count = numDie;
+      this.sides = faces;
+      ds = new Die[ numDie ];
       if(count < 1 ){
         throw new IllegalArgumentException("Need atleast 1 die to roll!");
       }
@@ -57,10 +60,8 @@ public class DiceSet {
         throw new IllegalArgumentException("A die needs atleast 4 sides!");
       }
       for(int x = 0; x < count; x++){
-        ds[x] = new Die(sides);
+        ds[x] = new Die(faces);
       }
-      this.count = count;
-      this.sides = sides;
    }
 
   /**
@@ -92,6 +93,9 @@ public class DiceSet {
    * @trhows IllegalArgumentException if the index is out of range
    */
    public int rollIndividual( int dieIndex ) {
+     if(dieIndex - 1 > sides){
+       throw new IllegalArgumentException("This die does not exist in your set");
+     }
       int rollI = 0;
       rollI = ds[dieIndex - 1].roll();
       return rollI;
@@ -104,7 +108,7 @@ public class DiceSet {
    */
    public int getIndividual( int dieIndex ) {
       if(dieIndex - 1 > sides){
-        new IllegalArgumentException("This die does not exist in your set");
+        throw new IllegalArgumentException("This die does not exist in your set");
       }
       return ds[dieIndex - 1].getValue();
    }
@@ -115,9 +119,17 @@ public class DiceSet {
    public String toString() {
       String rtrn = "";
       for(int x = 0; x < count; x++){
-        rtrn = rtrn + ds[x].toString();
+        rtrn = rtrn + "[" + ds[x].toString() + "]";
       }
       return rtrn;
+   }
+
+   public String toNumOnly(){
+     String rtrn = "";
+     for(int x = 0; x < count; x++){
+       rtrn = rtrn + ds[x].toString();
+     }
+     return rtrn;
    }
 
   /**
@@ -130,26 +142,93 @@ public class DiceSet {
   /**
    * @return  true iff this set is identical to the set passed as an argument
    */
-   public boolean isIdentical( DiceSet ds2 ) {
-      return true;
+   public boolean isIdentical( DiceSet ds ) {
+   String set1 = this.toNumOnly();
+   String set2 = ds.toNumOnly();
+
+   boolean same = false;
+
+   int[] setra1 = new int[set1.length()];
+   int[] setra2 = new int[set2.length()];
+
+   for(int x = 0; x < set1.length(); x++){
+     setra1[x] = Character.getNumericValue( set1.charAt( x ) );
+   }
+   for(int y = 0; y < set2.length(); y++){
+     setra2[y] = Character.getNumericValue( set2.charAt( y ) );
+   }
+   Arrays.sort( setra1 );
+   Arrays.sort( setra2 );
+
+   if( Arrays.equals( setra1, setra2 ) == true ){
+     same = true;
+   }
+
+      return same;
    }
   /**
    * A little test main to check things out
    */
    public static void main( String[] args ) {
       // You do this part!
-      System.out.println("You are now about to enter, the DiceSet zone...");
+      System.out.println("You are now about to enter, the Dielight zone...");
       DiceSet ds1 = new DiceSet( 5, 6);
+      DiceSet ds2 = new DiceSet( 2, 4);
+      DiceSet ds3 = new DiceSet( 4, 12);
       ds1.roll();
-      System.out.println( ds1.toString() );
-      System.out.println( DiceSet.toString(ds1) );
-      System.out.println( ds1.sum() );
-      System.out.println( ds1.rollIndividual(3) );
-      System.out.println( ds1.getIndividual(3) );
-      System.out.println( ds1.toString() );
-      System.out.println( DiceSet.toString(ds1) );
-      System.out.println( ds1.sum() );
-
+      ds2.roll();
+      ds3.roll();
+      System.out.println( "Checking toString method for accurately printing out the dice set :: " + ds1.toString() );
+      System.out.println( "Checking class-wide toString method for accurately printing out the dice set :: " + DiceSet.toString(ds1) );
+      System.out.println( "Checking sum for the total value of the dice :: " + ds1.sum() );
+      System.out.println( "Checking getIndividual for the die value at pos. 2 :: " + ds1.getIndividual(2) );
+      System.out.println( "Checking rollIndividual for the new die value at pos. 2 :: " + ds1.rollIndividual(2) );
+      System.out.println( "Checking toString method for accurately printing out the updated dice set :: " + ds1.toString() );
+      System.out.println( "Checking class-wide toString method for accurately printing out the updated dice set :: " + DiceSet.toString(ds1) );
+      System.out.println( "Checking sum for the total value of the dice :: " + ds1.sum() );
+      System.out.println( "Checking isIdentical with ds1 and ds1, expecting true. Actual output :: " + ds1.isIdentical(ds1) );
+      System.out.println();
+      System.out.println( "Checking toString method for accurately printing out the dice set :: " + ds2.toString() );
+      System.out.println( "Checking class-wide toString method for accurately printing out the dice set :: " + DiceSet.toString(ds2) );
+      System.out.println( "Checking sum for the total value of the dice :: " + ds2.sum() );
+      System.out.println( "Checking getIndividual for the die value at pos. 1 :: " + ds2.getIndividual(1) );
+      System.out.println( "Checking rollIndividual for the new die value at pos. 1 :: " + ds2.rollIndividual(1) );
+      System.out.println( "Checking toString method for accurately printing out the updated dice set :: " + ds2.toString() );
+      System.out.println( "Checking class-wide toString method for accurately printing out the updated dice set :: " + DiceSet.toString(ds2) );
+      System.out.println( "Checking sum for the total value of the dice :: " + ds2.sum() );
+      System.out.println( "Checking isIdentical with ds1 and ds2, expecting false. Actual output :: " + ds1.isIdentical(ds2) );
+      System.out.println();
+      System.out.println( "Checking toString method for accurately printing out the dice set :: " + ds3.toString() );
+      System.out.println( "Checking class-wide toString method for accurately printing out the dice set :: " + DiceSet.toString(ds3) );
+      System.out.println( "Checking sum for the total value of the dice :: " + ds3.sum() );
+      System.out.println( "Checking getIndividual for the die value at pos. 4 :: " + ds3.getIndividual(4) );
+      System.out.println( "Checking rollIndividual for the new die value at pos. 4 :: " + ds3.rollIndividual(4) );
+      System.out.println( "Checking toString method for accurately printing out the updated dice set :: " + ds3.toString() );
+      System.out.println( "Checking class-wide toString method for accurately printing out the updated dice set :: " + DiceSet.toString(ds3) );
+      System.out.println( "Checking sum for the total value of the dice :: " + ds3.sum() );
+      System.out.println( "Checking isIdentical with ds3 and ds3, expecting true. Actual output :: " + ds3.isIdentical(ds3) );
+      System.out.println();
+      System.out.println("I am checking getIndividual and rollIndividual for errors by calling for a die that doesn't exist.");
+      try{
+        ds1.rollIndividual(10);
+      }
+      catch( IllegalArgumentException IAE1){
+        System.out.println("This die does not exist in your set.");
+      }
+      try{
+        ds1.getIndividual(10);
+      }
+      catch( IllegalArgumentException IAE2){
+        System.out.println("This die does not exist in your set.");
+      }
+      System.out.println();
+      System.out.println("I am checking for the error of an invalid number of sides or die");
+      try{
+        DiceSet dsError = new DiceSet(0, 3);
+      }
+      catch( IllegalArgumentException IAE3){
+        System.out.println("I need atleast 1 die with a minimum of 4 sides to roll.");
+      }
    }
 
 }
