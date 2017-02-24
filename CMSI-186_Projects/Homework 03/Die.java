@@ -33,7 +33,10 @@
  *  @version 1.0.0  2017-02-06  B.J. Johnson  Initial writing and release
  *  @version 1.1.0  2017-02-17  B.J. Johnson  Filled in method code
  *  @version 1.2.0  2017-02-20  K. Patterson  Added code to the methods + created the main tester
+ *  @version 1.3.0  2017-02-23  K. Patterson  Finshed code in all methods, and added a working tester
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  import java.util.*;
+  
 public class Die {
 
   /**
@@ -96,7 +99,7 @@ public class Die {
    * @return String representation of this Die
    */
    public String toString() {
-      return "[" + dieRoll + "]";
+      return "" + dieRoll;
    }
 
   /**
@@ -113,17 +116,18 @@ public class Die {
    public static void main( String[] args ) {
       System.out.println( "Hello world from the Die class..." );
       Die d = new Die(10);
-      System.out.println( d.roll() );
-      System.out.println( d.getValue() );
-      System.out.println( d.toString() );
+      System.out.println( "Checking the value of the roll :: " + d.roll() );
+      System.out.println( "Checoing getValue for the value of the die :: " + d.getValue() );
+      System.out.println( "Checking toString for the correct return value :: " + d.toString() );
       d.setValue(6);
       d.roll();
-      System.out.println( Die.toString(d) );
-      System.out.println( d.roll());
-      System.out.println( d.roll());
-      System.out.println( d.roll());
-      System.out.println( d.roll());
-      System.out.println( d.roll());
+      System.out.println( "I have now reset the value of the die and rerolled it." );
+      System.out.println( "Checking the Class-wide toString for the correct return value :: " + Die.toString(d) );
+      System.out.println( "Checking the value of the roll :: " + d.roll() );
+      System.out.println( "Checking the value of the roll :: " + d.roll() );
+      System.out.println( "Checking the value of the roll :: " + d.roll() );
+      System.out.println( "Checking the value of the roll :: " + d.roll() );
+      System.out.println("I am checking for the error a 3 sided die will throw");
       try{
         d.setValue(3);
       }
