@@ -26,7 +26,10 @@
  *            Rev      Date     Modified by:  Reason for change/modification
  *           -----  ----------  ------------  -----------------------------------------------------------
  *  @version 1.0.0  2017-02-09  B.J. Johnson  Initial writing and release
+ *  @version 1.1.0  2017-02-23  K. Patterson  Adding code to methods
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+import java.util.Arrays;
+
 public class DiceSet {
 
   /**
@@ -51,11 +54,13 @@ public class DiceSet {
         throw new IllegalArgumentException("Need atleast 1 die to roll!");
       }
       if( sides < 4){
-        throw new IllegalArgumentException("A die needs atleast 4 sides!")
+        throw new IllegalArgumentException("A die needs atleast 4 sides!");
       }
       for(int x = 0; x < count; x++){
-        Die[x] = new Die(sides);
+        ds[x] = new Die(sides);
       }
+      this.count = count;
+      this.sides = sides;
    }
 
   /**
@@ -64,7 +69,7 @@ public class DiceSet {
    public int sum() {
      total = 0;
       for(int x = 0; x < count; x++){
-        total = total + Die[x].value();
+        total = total + ds[x].getValue();
       }
       return total;
    }
@@ -75,6 +80,9 @@ public class DiceSet {
    *  the values of the dice in the set
    */
    public void roll() {
+     for(int x = 0; x < count; x++){
+       ds[x].roll();
+     }
    }
 
   /**
@@ -84,7 +92,9 @@ public class DiceSet {
    * @trhows IllegalArgumentException if the index is out of range
    */
    public int rollIndividual( int dieIndex ) {
-      return 0;
+      int rollI = 0;
+      rollI = ds[dieIndex - 1].roll();
+      return rollI;
    }
 
   /**
@@ -93,28 +103,34 @@ public class DiceSet {
    * @trhows IllegalArgumentException if the index is out of range
    */
    public int getIndividual( int dieIndex ) {
-      return -999;
+      if(dieIndex - 1 > sides){
+        new IllegalArgumentException("This die does not exist in your set");
+      }
+      return ds[dieIndex - 1].getValue();
    }
 
   /**
    * @return Public Instance method that returns a String representation of the DiceSet instance
    */
    public String toString() {
-      String result = "";
-      return result;
+      String rtrn = "";
+      for(int x = 0; x < count; x++){
+        rtrn = rtrn + ds[x].toString();
+      }
+      return rtrn;
    }
 
   /**
    * @return Class-wide version of the preceding instance method
    */
    public static String toString( DiceSet ds ) {
-      return "";
+      return ds.toString();
    }
 
   /**
-   * @return  tru iff this set is identical to the set passed as an argument
+   * @return  true iff this set is identical to the set passed as an argument
    */
-   public boolean isIdentical( DiceSet ds ) {
+   public boolean isIdentical( DiceSet ds2 ) {
       return true;
    }
   /**
@@ -122,6 +138,18 @@ public class DiceSet {
    */
    public static void main( String[] args ) {
       // You do this part!
+      System.out.println("You are now about to enter, the DiceSet zone...");
+      DiceSet ds1 = new DiceSet( 5, 6);
+      ds1.roll();
+      System.out.println( ds1.toString() );
+      System.out.println( DiceSet.toString(ds1) );
+      System.out.println( ds1.sum() );
+      System.out.println( ds1.rollIndividual(3) );
+      System.out.println( ds1.getIndividual(3) );
+      System.out.println( ds1.toString() );
+      System.out.println( DiceSet.toString(ds1) );
+      System.out.println( ds1.sum() );
+
    }
 
 }
