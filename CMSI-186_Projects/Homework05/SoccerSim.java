@@ -21,6 +21,7 @@ Array to hold the different balls which will be instantiated
 ask for help?
 Need to be able to tell the difference between ball 1 and ball 2
 for collision()
+Think that I needed to use this to identify but not sure.
 */
 
 public class SoccerSim{
