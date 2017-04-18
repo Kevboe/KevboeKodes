@@ -176,6 +176,38 @@ public class GinormousIntTester {
         }
       catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
 
+          System.out.println( "\n\n    TESTING COMPARETO() METHOD:\n" +
+                              "    ===========================" );
+          try {
+             System.out.println( "\n    Test 033: Checking compareTo() method on g1 and g2: "  );
+             System.out.println( "      expecting: 0 and got: " + g1.compareTo( g2 ) );
+          }
+          catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+
+          try {
+             System.out.println( "\n    Test 034: Checking compareTo() method on g2 and g1: "  );
+             System.out.println( "      expecting: 0 and got: " + g2.compareTo( g1 ) );
+          }
+          catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+
+          try {
+             System.out.println( "\n    Test 035: Checking compareTo() method on g1 and g3: "  );
+             System.out.println( "      expecting: positive value and got: " + g1.compareTo( g3 ) );
+          }
+          catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+
+          try {
+             System.out.println( "\n    Test 036: Checking compareTo() method on g3 and g1: "  );
+             System.out.println( "      expecting: negative value and got: " + g3.compareTo( g1 ) );
+          }
+          catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+
+          try {
+             System.out.println( "\n    Test 037: Checking compareTo() method on g3 and g4: "  );
+             System.out.println( "      expecting: positive value and got: " + g3.compareTo( g4 ) );
+          }
+          catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+
     }
 
    //
