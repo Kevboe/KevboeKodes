@@ -1,3 +1,22 @@
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * File name  :  GinormousInt.java
+ * Purpose    :  Test Harness for the GinormousInt java class
+ * @author    :  Kevin Patterson
+ * Date       :  2017-04-05
+ * Description:  @see <a href='http://bjohnson.lmu.build/cmsi186web/homework06.html'>Assignment Page</a>
+ * Notes      :  None
+ * Warnings   :  None
+ *
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Revision History
+ * ================
+ *   Ver      Date     Modified by:  Reason for change or modification
+ *  -----  ----------  ------------  ---------------------------------------------------------------------
+ *  1.0.0  2017-04-16  K. Patterson  Initial writing
+ *  1.1.0  2017-04-17  K. Patterson  Creating add/sub/mult
+ *
+ */
+
 import java.util.*;
 
 public class GinormousInt {
@@ -57,12 +76,12 @@ public class GinormousInt {
       for ( int x = big1.size() - 1; x > 0; x-- ) {
 
         if ( ( big1.get( x ) + big2.get( x + digitDif ) + carry ) >= 10 ){
-          afterMath.add( ( ( big1.get( x ) + big2.get( x ) + carry ) % 10 ), 0 )
+          afterMath.add( ( ( big1.get( x ) + big2.get( x + digitDif ) + carry ) % 10 ), 0 )
           carry = 1;
         }
 
         if ( ( big1.get( x ) + big2.get( x + digitDif ) + carry ) < 10 ){
-          afterMath.add( ( ( big1.get( x ) + big2.get( x ) + carry ) % 10 ), 0 )
+          afterMath.add( ( ( big1.get( x ) + big2.get( x + digitDif ) + carry ) % 10 ), 0 )
           carry = 0;
         }
       }
@@ -77,16 +96,43 @@ public class GinormousInt {
         }
       }
     }
+
     if ( big1.compareTo( big2 ) == 1 ){
-      for ( int x = big2.size(); x > 0; x-- ) {
-        // copy and change code from one part of add isntance to other sections
+      digitDif = big1.size() - big2.size();
+      for ( int x = big2.size() - 1; x > 0; x-- ) {
+        if ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) >= 10 ){
+          afterMath.add( ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) % 10 ), 0 )
+          carry = 1;
+        }
+        if ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) < 10 ){
+          afterMath.add( ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) % 10 ), 0 )
+          carry = 0;
+        }
+      }
+      for ( int x = digitDif - 1;  x > 0; x-- ){
+        if ( big2.get( x ) + carry >= 10 ){
+          afterMath.add( ( big2.get( x ) + carry ) % 10 ), 0 )
+          carry = 1;
+        }
+        if ( big2.get( x ) + carry < 10 ){
+          afterMath.add( ( big2.get( x ) + carry ) % 10 ), 0 )
+          carry = 0;
+        }
       }
     }
-    if ( big1.compareTo( big2 ) == -0 ){
-      for ( int x = big2.size(); x > 0; x-- ) {
-        // copy and change code from one part of add isntance to other sections
+    if ( big1.compareTo( big2 ) == 0 ){
+      for ( int x = big2.size() - 1; x > 0; x-- ) {
+        if ( ( big1.get( x ) + big2.get( x ) + carry ) >= 10 ){
+          afterMath.add( ( ( big1.get( x ) + big2.get( x ) + carry ) % 10 ), 0 )
+          carry = 1;
+        }
+        if ( ( big1.get( x ) + big2.get( x ) + carry ) < 10 ){
+          afterMath.add( ( ( big1.get( x ) + big2.get( x ) + carry ) % 10 ), 0 )
+          carry = 0;
+        }
       }
     }
+    return afterMath;
   }
 
   public boolean equals( GinormousInt big2){
