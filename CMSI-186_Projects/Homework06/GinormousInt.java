@@ -24,12 +24,22 @@ public class GinormousInt {
   private ArrayList<Integer> big1 = new ArrayList<Integer>();
   private ArrayList<Integer> afterMath = new ArrayList<Integer>();
   private int carry;
+  private boolean negative;
   public static final int ZERO = 0;
   public static final int ONE = 1;
   public static final int TEN = 10;
 
   public GinormousInt( String gInt ) {
+    negative = false;
+    if ( gInt.contains("-") ){
+      gInt.replaceAll( "-", "" );
+      negative = true;
+    }
    for(int x = 0; x < gInt.length(); x++){
+     if( negative == true && x == 0 ){
+       big1.add( -1 * (Integer.parseInt( String.valueOf( gInt.charAt( x ) ) ) ) );
+       x++;
+     }
      big1.add( Integer.parseInt( String.valueOf( gInt.charAt( x ) ) ) );
    }
    carry = 0;
@@ -43,8 +53,8 @@ public class GinormousInt {
     return big1.size();
   }
 
-  public void add(int x, int pos){
-    big1.add( x, pos );
+  public void add(int pos, int x){
+    big1.add( pos, x );
   }
 
   public int compareTo( GinormousInt big2){
@@ -73,82 +83,69 @@ public class GinormousInt {
   }
 
   public ArrayList<Integer> addInt( GinormousInt big2 ) {
+    afterMath.clear();
     carry = 0;
     int digitDif = 0;
     int sum = 0;
     if ( big1.size() < big2.size() ){
       digitDif = big2.size() - big1.size();
-      for ( int x = big1.size() - 1; x > 0; x-- ) {
-        System.out.println("inside the first for loop 1");
+      for ( int x = big1.size() - 1; x >= 0; x-- ) {
         sum = big1.get( x ) + big2.get( x + digitDif ) + carry;
-        if ( sum >= 10 ){
-          afterMath.add( ( sum %10 ), 0 );
+        if ( sum > 9 ){
+          afterMath.add( 0, ( sum % 10 ) );
           carry = 1;
-          System.out.println("Carry the 1");
         }
-
         if ( sum < 10 ){
-          afterMath.add( ( sum %10 ), 0 );
+          afterMath.add( 0, ( sum % 10 ) );
           carry = 0;
-          System.out.println("Carry the 0");
         }
       }
-      for ( int x = digitDif - 1;  x > 0; x-- ){
-        System.out.println("Inside the second for loop 1");
+      for ( int x = digitDif - 1;  x >= 0; x-- ){
         if ( big2.get( x ) + carry >= 10 ){
-          afterMath.add( ( ( big2.get( x ) + carry ) % 10 ) , 0 );
+          afterMath.add( 0, ( ( big2.get( x ) + carry ) % 10 ) );
           carry = 1;
-          System.out.println("Carry the 1");
         }
         if ( big2.get( x ) + carry < 10 ){
-          afterMath.add( ( ( big2.get( x ) + carry ) % 10 ), 0 );
+          afterMath.add( 0, ( ( big2.get( x ) + carry ) % 10 ) );
           carry = 0;
-          System.out.println("Carry the 0");
         }
       }
     }
 
     if ( big1.size() > big2.size() ){
       digitDif = big1.size() - big2.size();
-      for ( int x = big2.size() - 1; x > 0; x-- ) {
-        System.out.println("Inside the first for loop 2");
-        if ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) >= 10 ){
-          afterMath.add( ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) % 10 ), 0 );
+      for ( int x = big2.size() - 1; x >= 0; x-- ) {
+        sum = big1.get( x + digitDif ) + big2.get( x ) + carry;
+        if ( sum > 9 ){
+          afterMath.add( 0, ( sum % 10 ) );
           carry = 1;
-          System.out.println("Carry the 1");
         }
-        if ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) < 10 ){
-          afterMath.add( ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) % 10 ), 0 );
+        if (sum < 10 ){
+          afterMath.add( 0, (sum % 10 ) );
           carry = 0;
-          System.out.println("Carry the 0");
         }
       }
-      for ( int x = digitDif - 1;  x > 0; x-- ){
-        System.out.println("Inside the second for loop 2");
-        if ( big2.get( x ) + carry >= 10 ){
-          afterMath.add( ( ( big2.get( x ) + carry ) % 10 ), 0 );
+      for ( int x = digitDif - 1;  x >= 0; x-- ){
+        if ( big1.get( x ) + carry >= 10 ){
+          afterMath.add( 0, ( ( big1.get( x ) + carry ) % 10 ) );
           carry = 1;
-          System.out.println("Carry the 1");
         }
-        if ( big2.get( x ) + carry < 10 ){
-          afterMath.add( ( ( big2.get( x ) + carry ) % 10 ), 0 );
+        if ( big1.get( x ) + carry < 10 ){
+          afterMath.add( 0, ( ( big1.get( x ) + carry ) % 10 ) );
           carry = 0;
-          System.out.println("Carry the 0");
         }
       }
     }
+
     if ( big1.size() == big2.size() ){
-      for ( int x = big2.size() - 1; x > 0; x-- ) {
-        System.out.println("Inside the for loop 3");
+      for ( int x = big2.size() - 1; x >= 0; x-- ) {
         if ( ( big1.get( x ) + big2.get( x ) + carry ) >= 10 ){
-          afterMath.add( ( ( big1.get( x ) + big2.get( x ) + carry ) % 10 ), 0 );
+          afterMath.add( 0, ( ( big1.get( x ) + big2.get( x ) + carry ) % 10 ) );
           carry = 1;
-          System.out.println("Carry the 1");
         }
         if ( ( big1.get( x ) + big2.get( x ) + carry ) < 10 ){
-          afterMath.add( ( ( big1.get( x ) + big2.get( x ) + carry ) % 10 ), 0 );
+          afterMath.add( 0, ( ( big1.get( x ) + big2.get( x ) + carry ) % 10 ) );
           carry = 0;
-          System.out.println("Carry the 0");
         }
       }
     }
@@ -184,14 +181,4 @@ public class GinormousInt {
 
 }
 
-/* notes and thoughts
-Array list of integers
-for loop to go through and access numbers
-make sure toString doesn't include the commas. makes it just the numbers!!
-Multiplication is just repetitive addition
-Multiplication:
-1234 * 567 = 1234 * 7 + 1234 * 60 + 1234 * 500 = answer
-result 1 + result 2 = total
-result 1 = total
-result 2 = base # * next number in bottom list and add() 0s
-*/
+
