@@ -253,6 +253,12 @@ public class GinormousIntTester {
               catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
 
               try {
+                 System.out.println( "    Test 018: Adding g13 and g13 [234567 + 234567] using ints: " );
+                 System.out.println( "      expecting: 469134 and got " + g13.addInt( g13 ) );
+              }
+              catch( Exception e ) { System.out.println( "        Exception thrown:  " ); }
+
+              try {
                  System.out.println( "    Test 019: Adding g13 and g11 [234567 + 10] using ints: " );
                  System.out.println( "      expecting: 234577 and got " + g13.addInt( g11 ) );
               }
