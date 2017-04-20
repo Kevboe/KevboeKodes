@@ -43,6 +43,10 @@ public class GinormousInt {
     return big1.size();
   }
 
+  public void add(int x, int pos){
+    big1.add( x, pos );
+  }
+
   public int compareTo( GinormousInt big2){
     int rtrnSize = 0;
     if( big1.size() > big2.size() ){
@@ -68,67 +72,81 @@ public class GinormousInt {
     return rtrnSize;
   }
 
-  public GinormousInt addInt( GinormousInt big2 ) {
+  public ArrayList<Integer> addInt( GinormousInt big2 ) {
     carry = 0;
     int digitDif = 0;
-    if ( big1.compareTo( big2 ) == -1 ){
+    if ( big1.size() < big2.size() ){
       digitDif = big2.size() - big1.size();
       for ( int x = big1.size() - 1; x > 0; x-- ) {
-
+        System.out.println("inside the first for loop 1");
         if ( ( big1.get( x ) + big2.get( x + digitDif ) + carry ) >= 10 ){
-          afterMath.add( ( ( big1.get( x ) + big2.get( x + digitDif ) + carry ) % 10 ), 0 )
+          afterMath.add( ( ( big1.get( x ) + big2.get( x + digitDif ) + carry ) % 10 ), 0 );
           carry = 1;
+          System.out.println("Carry the 1");
         }
 
         if ( ( big1.get( x ) + big2.get( x + digitDif ) + carry ) < 10 ){
-          afterMath.add( ( ( big1.get( x ) + big2.get( x + digitDif ) + carry ) % 10 ), 0 )
+          afterMath.add( ( ( big1.get( x ) + big2.get( x + digitDif ) + carry ) % 10 ), 0 );
           carry = 0;
+          System.out.println("Carry the 0");
         }
       }
       for ( int x = digitDif - 1;  x > 0; x-- ){
+        System.out.println("Inside the second for loop 1");
         if ( big2.get( x ) + carry >= 10 ){
-          afterMath.add( ( big2.get( x ) + carry ) % 10 ), 0 )
+          afterMath.add( ( ( big2.get( x ) + carry ) % 10 ) , 0 );
           carry = 1;
+          System.out.println("Carry the 1");
         }
         if ( big2.get( x ) + carry < 10 ){
-          afterMath.add( ( big2.get( x ) + carry ) % 10 ), 0 )
+          afterMath.add( ( ( big2.get( x ) + carry ) % 10 ), 0 );
           carry = 0;
+          System.out.println("Carry the 0");
         }
       }
     }
 
-    if ( big1.compareTo( big2 ) == 1 ){
+    if ( big1.size() > big2.size() ){
       digitDif = big1.size() - big2.size();
       for ( int x = big2.size() - 1; x > 0; x-- ) {
+        System.out.println("Inside the first for loop 2");
         if ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) >= 10 ){
-          afterMath.add( ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) % 10 ), 0 )
+          afterMath.add( ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) % 10 ), 0 );
           carry = 1;
+          System.out.println("Carry the 1");
         }
         if ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) < 10 ){
-          afterMath.add( ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) % 10 ), 0 )
+          afterMath.add( ( ( big1.get( x + digitDif ) + big2.get( x ) + carry ) % 10 ), 0 );
           carry = 0;
+          System.out.println("Carry the 0");
         }
       }
       for ( int x = digitDif - 1;  x > 0; x-- ){
+        System.out.println("Inside the second for loop 2");
         if ( big2.get( x ) + carry >= 10 ){
-          afterMath.add( ( big2.get( x ) + carry ) % 10 ), 0 )
+          afterMath.add( ( ( big2.get( x ) + carry ) % 10 ), 0 );
           carry = 1;
+          System.out.println("Carry the 1");
         }
         if ( big2.get( x ) + carry < 10 ){
-          afterMath.add( ( big2.get( x ) + carry ) % 10 ), 0 )
+          afterMath.add( ( ( big2.get( x ) + carry ) % 10 ), 0 );
           carry = 0;
+          System.out.println("Carry the 0");
         }
       }
     }
-    if ( big1.compareTo( big2 ) == 0 ){
+    if ( big1.size() == big2.size() ){
       for ( int x = big2.size() - 1; x > 0; x-- ) {
+        System.out.println("Inside the for loop 3");
         if ( ( big1.get( x ) + big2.get( x ) + carry ) >= 10 ){
-          afterMath.add( ( ( big1.get( x ) + big2.get( x ) + carry ) % 10 ), 0 )
+          afterMath.add( ( ( big1.get( x ) + big2.get( x ) + carry ) % 10 ), 0 );
           carry = 1;
+          System.out.println("Carry the 1");
         }
         if ( ( big1.get( x ) + big2.get( x ) + carry ) < 10 ){
-          afterMath.add( ( ( big1.get( x ) + big2.get( x ) + carry ) % 10 ), 0 )
+          afterMath.add( ( ( big1.get( x ) + big2.get( x ) + carry ) % 10 ), 0 );
           carry = 0;
+          System.out.println("Carry the 0");
         }
       }
     }
