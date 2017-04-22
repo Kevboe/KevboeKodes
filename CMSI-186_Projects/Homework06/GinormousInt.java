@@ -30,6 +30,7 @@ public class GinormousInt {
   public static final int TEN = 10;
 
   public GinormousInt( String gInt ) {
+    //Trying to make negative numbers work in GinormousInt
     negative = false;
     if ( gInt.contains("-") ){
       gInt.replaceAll( "-", "" );
@@ -82,7 +83,7 @@ public class GinormousInt {
     return rtrnSize;
   }
 
-  public ArrayList<Integer> addInt( GinormousInt big2 ) {
+  public String addInt( GinormousInt big2 ) {
     afterMath.clear();
     carry = 0;
     int digitDif = 0;
@@ -149,7 +150,108 @@ public class GinormousInt {
         }
       }
     }
-    return afterMath;
+    String rtrn = "";
+    for( int i : afterMath ){
+      rtrn += i;
+    }
+    return rtrn;
+  }
+
+  public String subtractInt( GinormousInt big2 ) {
+    //More time: Make it so negatives work 1 negative = addition 2 negatives = still subtraction
+    //Idea: Manipulate the ints independant of negatives then add 1 if needed at the end
+    //Can't implement due to time constraints
+    afterMath.clear();
+    int digitDif = 0;
+    int dif = 0;
+    int borrow = 0;
+    int rtrnSize = 0;
+    if ( big1.size() < big2.size() ){
+      digitDif = big2.size() - big1.size();
+      for ( int x = big1.size() - 1; x >= 0; x-- ) {
+        dif = ( big2.get(x) - borrow ) - big1.get(x);
+        if ( dif < 0 ){
+          afterMath.add( 0, ( 10 - dif ) );
+          borrow = 1;
+        }
+        afterMath.add( 0, ( dif) );
+        carry = 0;
+      }
+      for ( int x = digitDif - 1;  x >= 0; x-- ){
+        dif = big2.get(x) - borrow;
+        if ( dif < 0 ){
+          afterMath.add( 0, ( 10 - dif ) );
+          borrow = 1;
+        }
+        afterMath.add( 0, ( dif) );
+        carry = 0;
+      }
+    }
+
+    if ( big1.size() > big2.size() ){
+      digitDif = big1.size() - big2.size();
+      for ( int x = big2.size() - 1; x >= 0; x-- ) {
+        dif = ( big1.get(x) - borrow ) - big2.get(x);
+        if ( dif < 0 ){
+          afterMath.add( 0, ( 10 - dif ) );
+          borrow = 1;
+        }
+        afterMath.add( 0, ( dif) );
+        carry = 0;
+      }
+      for ( int x = digitDif - 1;  x >= 0; x-- ){
+        dif = big1.get(x) - borrow;
+        if ( dif < 0 ){
+          afterMath.add( 0, ( 10 - dif ) );
+          borrow = 1;
+        }
+        afterMath.add( 0, ( dif) );
+        carry = 0;
+      }
+    }
+
+    if ( big1.size() == big2.size() ){
+      for( int x = 0; x < big1.size(); x++ ){
+        if( big1.get( x ) > big2.get( x ) ){
+          rtrnSize = 1;
+          break;
+        }
+        if( big1.get(x) < big2.get( x ) ){
+          rtrnSize = -1;
+          break;
+        }
+      }
+      if ( big1.equals( big2 ) == true ){
+        afterMath.add( 0 );
+      }
+      if ( rtrnSize == -1 ){
+        for ( int x = big2.size() - 1; x >= 0; x-- ) {
+          dif = ( big2.get(x) - borrow ) - big1.get(x);
+          if ( dif < 0 ){
+            afterMath.add( 0, ( 10 - dif ) );
+            borrow = 1;
+          }
+          afterMath.add( 0, ( dif) );
+          carry = 0;
+          }
+        }
+        if ( rtrnSize == 1 ){
+          for ( int x = big1.size() - 1; x >= 0; x-- ) {
+            dif = ( big1.get(x) - borrow ) - big2.get(x);
+            if ( dif < 0 ){
+              afterMath.add( 0, ( 10 - dif ) );
+              borrow = 1;
+            }
+            afterMath.add( 0, ( dif) );
+            carry = 0;
+          }
+        }
+      }
+    String rtrn = "";
+    for( int i : afterMath ){
+      rtrn += i;
+    }
+    return rtrn;
   }
 
   public boolean equals( GinormousInt big2){
@@ -181,4 +283,14 @@ public class GinormousInt {
 
 }
 
-
+/* notes and thoughts
+Array list of integers
+for loop to go through and access numbers
+make sure toString doesn't include the commas. makes it just the numbers!!
+Multiplication is just repetitive addition
+Multiplication:
+1234 * 567 = 1234 * 7 + 1234 * 60 + 1234 * 500 = answer
+result 1 + result 2 = total
+result 1 = total
+result 2 = base # * next number in bottom list and add() 0s
+*/
