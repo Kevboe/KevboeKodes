@@ -78,6 +78,17 @@ public class DynamicChangeMaker {
         }
     }
 
+    /**
+     * Create a tuple (2d array) that will allow for the program to loop through
+     * and slowly refine currency choices until the best breakdown of change is found.
+     *
+     * @param denominations an array of the different denominations of coin
+     * @param amount the total money you are adding up to
+     *
+     * @return a Tuple that contains the most effecient breakdown of currency
+     
+     */
+
     public static Tuple makeChangeWithDynamicProgramming(int[] denominations, int amount) {
         Tuple[][] makeChange = new Tuple[ denominations.length ][ amount + 1 ];
         for( int i = 0; i < denominations.length; i++ ){
